@@ -456,13 +456,16 @@ home.index CSS code
 sign up sign i CSS code
 ---------------------------------*/
 
-.gLogo, .logo{
+.g-signin2{
   height: 50px;
   border: none;
   padding: 0;
   margin:20px;
   background: none;
   cursor: pointer;
+    align-items: center;
+  display: inline-block;
+
 }
 
 a {
