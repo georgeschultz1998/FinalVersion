@@ -168,3 +168,50 @@ module.exports = {
   updateDatabase,
 };
 
+
+app.get('/googleSignIn', (req, res) => {
+  const code = req.query.code;
+  const url = 'https://oauth2.googleapis.com/token';
+  const data = {
+    code: code,
+    client_id: process.env.GOOGLE_CLIENT_ID,
+    client_secret: process.env.GOOGLE_CLIENT_SECRET,
+    redirect_uri: process.env.GOOGLE_REDIRECT_URI,
+    grant_type: 'authorization_code',
+  };
+
+  fetch(url, {
+    method: 'POST',
+    body: JSON.stringify(data),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((response) => {
+      const accessToken = response.access_token;
+      const idToken = response.id_token;
+
+      // Call your server endpoint that handles Google sign-ins
+// Call your server endpoint that handles Google sign-ins
+fetch('http://node-env.eba-xds42k2z.us-east-1.elasticbeanstalk.com/googleSignIn', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({ token: id_token }),
+}).then((response) => {
+        if (response.success) {
+          // If the login was successful, redirect the user to the dashboard
+          window.location.href = '/dashboard';
+        } else {
+          // If there was an error logging in, display the error message
+          displayError(response.error);
+        }
+      });
+    })
+    .catch((error) => {
+      console.error('Error exchanging Google authorization code:', error);
+      displayError('Error exchanging Google authorization code');
+    });
+});
