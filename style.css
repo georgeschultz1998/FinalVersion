@@ -1,0 +1,152 @@
+.container {
+	max-width: 800px;
+	margin: 0 auto;
+	padding: 20px;
+}
+
+h1 {
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+form label {
+	display: block;
+	margin-bottom: 5px;
+	margin-left: 25%;
+}
+
+table {
+	width: 100%;
+	margin-top: 20px;
+	border-collapse: collapse;
+}
+
+.table-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+#data {
+  float:left;
+}
+
+#deleteTable {
+  float:right;
+}
+
+table th, table td {
+	padding: 10px;
+	border: 1px solid #ddd;
+	text-align: center;
+}
+
+table th {
+	background-color: #eee;
+}
+
+form input[type="button"] {
+  display: inline-block;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+form input[type="button"]:hover {
+  background-color: #3e8e41;
+}
+
+form input[type="button"] + input[type="button"] {
+  margin-left: 10px;
+}
+
+
+.deleteRow:hover{
+  background-color: red;
+  color: white;
+}
+
+.table-container {
+  max-height: 500px;
+  overflow: auto;
+}
+
+tbody{
+    font-size: 8px;
+}
+
+#data tbody {
+  display: block;
+  width: 100%;
+  max-height: calc(10 * 2em); /* Change 5 to the number of rows to display at a time */
+  overflow-y: scroll;
+
+}
+
+#data tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+#data td {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  width: calc(100% / 11);
+  /* Change 11 to the number of columns in your table */
+}
+
+#addButton {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+
+nav ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+}
+
+nav ul li {
+	position: relative;
+	margin-right: 20px;
+}
+
+nav ul li ul {
+	display: none;
+	position: absolute;
+	top: 100%;
+	left: 0;
+	background-color: #fff;
+	border: 1px solid #ccc;
+	padding: 10px;
+}
+
+nav ul li:hover ul {
+	display: block;
+}
+
+nav ul li a {
+	display: block;
+	color: #333;
+	text-decoration: none;
+}
+
+nav ul li ul li {
+	margin: 5px 0;
+}
+
+nav ul li ul li a {
+	display: block;
+	color: #333;
+	text-decoration: none;
+}
+
