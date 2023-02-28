@@ -173,7 +173,7 @@ var loadSearchEnterTable = function() {
         tbody.innerHTML = headerRow;
         addRow("searchEnterTable", 1);
 
-  
+
       }
     });
   });
@@ -481,9 +481,9 @@ var saveCSV = function() {
 //---------------------------------------------------
 // Print 
 
-var printDatabase = function() {
+var printTable = function(tableID) {
   // Create a reference to the table element
-  var table = document.getElementById('data');
+  var table = document.getElementById(tableID);
 
   // Store the current overflow style property
   var originalOverflow = document.body.style.overflow;
@@ -494,9 +494,9 @@ var printDatabase = function() {
   // Create a new window and write the table to it
   var printWindow = window.open('', '_blank');
   printWindow.document.write('<html><head><title>Table Contents</title>');
-  printWindow.document.write('<style>table { width: 100%; margin-top: 20px; border-collapse: collapse; } table th, table td { padding: 10px; border: 1px solid #ddd; text-align: center; } table th { background-color: #eee; }</style>');
+  printWindow.document.write('<style>table { width: 100%; margin-top: 20px; border-collapse: collapse; } table th, table td { padding: 10px; border: 1px solid #ddd; text-align: center; } table th { background-color: #eee; } #' + tableID + ' tr:first-child {background-color: #eee;}</style>');
   printWindow.document.write('</head><body>');
-  printWindow.document.write(table.outerHTML);
+  printWindow.document.write('<table id="' + tableID + '">' + table.innerHTML + '</table>');
   printWindow.document.write('</body></html>');
   printWindow.document.close();
 
@@ -504,6 +504,7 @@ var printDatabase = function() {
   printWindow.print();
   document.body.style.overflow = originalOverflow;
 }
+
 //---------------------------------------------------
 // Close Function
 //---------------------------------------------------
