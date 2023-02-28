@@ -1,5 +1,11 @@
-name,age,email,phone,address
-John,30,john@example.com,1234567890,123 Main St
-Jane,25,jane@example.com,987654321,456 Oak Ave
-Bob,45,bob@example.com,5551234567,789 Elm St
-Mary,38,mary@example.com,5559876543,321 Maple Rd
+ID,Apt,Tenant,Month,Year,Transaction,Debit,Credit,Date,Type,Notes
+1,101,John Doe,January,2022,Rent,1000,,1/1/2022,Check,
+2,102,Jane Smith,January,2022,Rent,950,,1/1/2022,Check,
+3,103,Bob Johnson,February,2022,Rent,800,,2/1/2022,Check,
+4,101,John Doe,February,2022,Rent,1000,,2/1/2022,Check,
+5,102,Jane Smith,March,2022,Rent,950,,3/1/2022,Check,
+6,103,Bob Johnson,March,2022,Rent,800,,3/1/2022,Check,
+7,101,John Doe,April,2022,Rent,1000,,4/1/2022,Check,
+8,102,Jane Smith,April,2022,Rent,950,,4/1/2022,Check,
+9,103,Ja,An,2022,Rent,800,,5/1/2022,Check,
+10,101,John Doe,May,2022,Rent,1000,,5/1/2022,Check,

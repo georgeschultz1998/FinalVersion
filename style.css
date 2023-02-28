@@ -450,3 +450,41 @@ home.index CSS code
 #welcomeImg, #aboutImg{
   width:100%;
 }
+
+
+/*-------------------------------
+sign up sign i CSS code
+---------------------------------*/
+
+.gLogo, .logo{
+  height: 50px;
+  border: none;
+  padding: 0;
+  margin:20px;
+  background: none;
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+}
+
+footer {
+  background-color: white;
+  color: black;
+  padding: 20px;
+  text-align: center;
+  width: 100%;
+}
+
+.footer-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  height: 50px;
+  margin-right: 0px;
+}
