@@ -4,6 +4,8 @@ const path = require('path');
 const qs = require('querystring');
 const csv = require('csv-parser');
 const Papa = require('papaparse');
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
 
 const filePath1 = 'database.csv';
 const filePath2 = 'history.csv';
@@ -33,8 +35,6 @@ function loadData(callback) {
     });
 }
 
-
-
 function loadHistoryData(callback) {
   const historyArray = [];
   fs.createReadStream(filePath2)
@@ -58,6 +58,7 @@ function updateDatabase(body) {
 }
 
 let previousData = "";
+
 
 function updateHistory(body) {
   var dataArray = Papa.parse(body.trim()).data;
@@ -102,7 +103,42 @@ function arraysEqual(arr1, arr2) {
 
 
 
+// Initialize passport
+passport.use(new LocalStrategy(
+  {
+    usernameField: 'email',
+    passwordField: 'password'
+  },
+  (email, password, done) => {
+    // Here, you can authenticate the user by checking if the email and password are valid
+    // If the user is authenticated, call done(null, user)
+    // If the user is not authenticated, call done(null, false)
+  }
+));
+
 const server = http.createServer((req, res) => {
+  // Check if the request requires authentication
+  const requiresAuth = req.url === '/admin';
+
+  if (requiresAuth) {
+    // Authenticate the request using passport
+    passport.authenticate('local', (err, user, info) => {
+      if (err) {
+        return res.status(500).send(err);
+      }
+      if (!user) {
+        return res.status(401).send(info.message);
+      }
+      // If the user is authenticated, you can proceed with the request handling logic here
+      handleRequest(req, res);
+    })(req, res);
+  } else {
+    // If the request doesn't require authentication, proceed with the request handling logic directly
+    handleRequest(req, res);
+  }
+});
+
+function handleRequest(req, res) {
   res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
   const extname = path.extname(req.url);
   let contentType = 'text/html';
@@ -157,15 +193,22 @@ const server = http.createServer((req, res) => {
       });
     });
   }
-});
+}
 
 const port = process.env.PORT || 3000;
 server.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
 
+
 module.exports = {
   updateDatabase,
 };
+
+
+
+
+
+
 
 
