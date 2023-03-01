@@ -234,3 +234,6 @@ function populateTable(data) {
   }
 }
 
+function zoomIn(image) {
+	image.classList.toggle("zoom");
+}

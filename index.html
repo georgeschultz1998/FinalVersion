@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <head>
   <title>Apartment Database</title>
@@ -5,13 +6,12 @@
   <link rel="stylesheet" type="text/css" href="style.css">
   <script type="text/javascript" src="script.js"></script>
   <script type="text/javascript" src="temp.js"></script>
-
-  
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.0/papaparse.min.js"></script>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/smoothness/jquery-ui.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
-  <script>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/smoothness/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+
+        <script>
 function saveCSV() {
   const table = document.getElementById("data");
   const rows = Array.from(table.rows);
@@ -82,145 +82,75 @@ function saveCSV() {
   </script>
 </head>
 
-  
-  <!-- -->
 <body>
+  <header>
+    <h1>Mears Avenue Apartments</h1>
+  </header>
 
+  <nav>
+    <ul>
+      <li><a href="home.html">Home</a></li>
+      <li><a href="featured.html">Featured Properties</a></li>
+      <li><a href="account.html">Sign Up / Sign In</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="index.html">Database</a></li>
+    </ul>
+  </nav>
 
   <div class="container">
-    <h1>Apartment Database</h1>
-
-    <!--
-    
-  		<nav>
-			<ul>
-				<li><a href="#">File</a>
-					<ul>
-						<li><a href="#">New</a></li>
-						<li><a href="#" onclick="openCSV()">Open</a></li>
-						<li><a href="#" onclick="saveCSV()">Save</a></li>
-						<li><a href="#">Save AS</a></li>
-						<li><a href="#" onclick="printDatabase()">Print Database</a></li>
-						<li><a href="#">Close</a></li>
-					</ul>
-				</li>
-				<li><a href="#">Edit</a>
-					<ul>
-						<li><a href="#">Undo</a></li>
-						<li><a href="#">Redo</a></li>
-						<li><a href="#">Cut</a></li>
-						<li><a href="#">Copy</a></li>
-						<li><a href="#">Paste</a></li>
-					</ul>
-				</li>
-				<li><a href="#">View</a>
-					<ul>
-						<li><a href="#">Zoom In</a></li>
-						<li><a href="#">Zoom Out</a></li>
-						<li><a href="#">Full Screen</a></li>
-						<li><a href="#">Status Bar</a></li>
-					</ul>
-				</li>
-				<li><a href="#">Insert</a>
-					<ul>
-						<li><a href="#">Chart</a></li>
-						<li><a href="#">Table</a></li>
-						<li><a href="#">Image</a></li>
-						<li><a href="#">Shape</a></li>
-					</ul>
-				</li>
-				<li><a href="#">Format</a>
-					<ul>
-						<li><a href="#">Font</a></li>
-						<li><a href="#">Alignment</a></li>
-						<li><a href="#">Borders</a></li>
-						<li><a href="#">Fill</a></li>
-						<li><a href="#">Number</a></li>
-					</ul>
-				</li>
-				<li><a href="#">Tools</a>
-					<ul>
-						<li><a href="#">Spelling and Grammar</a></li>
-						<li><a href="#">Customize</a></li>
-						<li><a href="#">Options</a></li>
-					</ul>
-				</li>
-				<li><a href="#">Data</a>
-					<ul>
-						<li><a href="#">Sort</a></li>
-						<li><a href="#">Filter</a></li>
-						<li><a href="#">Group</a></li>
-						<li><a href="#">Subtotal</a></li>
-					</ul>
-				</li>
-				<li><a href="#">Help</a>
-					<ul>
-						<li><a href="#">Database Help</a></li>
-						<li><a href="#">About Database</a></li>
-					</ul>
-				</li>
-			</ul>
-		</nav>
-    
-      -->
-
-<form id="apartment-form" action="/" method="post">
-
-        <h2>Edit Database </h2>
+    <form id="apartment-form" action="/" method="post">
+      <h2>Edit Database</h2>
       <input type="button" value="Download CSV" onclick="downloadCSV()">
       <input type="button" value="Save" onclick="saveCSV()">
-  <input type="checkbox" id="autoSaveCheckbox" onclick="toggleAutoSave()">
-  <span id="autoSaveText">Auto Save Off</span>
+      <input type="checkbox" id="autoSaveCheckbox" onclick="toggleAutoSave()">
+      <span id="autoSaveText">Auto Save Off</span>
   
-<div class="table-container">
-  <table id="data">
-    <thead>
-      <!-- Header row will be dynamically added -->
-    </thead>
-    <tbody>
-      <!-- Rows will be dynamically added -->
-    </tbody>
+      <div class="table-container">
+        <table id="data">
+          <thead>
+            <!-- Header row will be dynamically added -->
+          </thead>
+          <tbody>
+            <!-- Rows will be dynamically added -->
+          </tbody>
+        </table>
+      </div>
   
-  </table>
+      <input type="button" value="Add Rows" id="addButton" onclick="addRow('data', 3)">
+
+    </form>
+
+    <h2>Enter Search Data</h2>
+    <input type="button" value="Search" onclick="updateSearchResults()">
+    <table id="searchEnterTable">
+      <tbody>
+      </tbody>
+    </table>
+      
+    <h2>View Search Results</h2>
+    <input type="button" value="Print All Data" onclick="printTable('data')" id="printButton">
+    <input type="button" value="Print Results" onclick="printTable('searchResultsTable')" id="printButton">
+    <div class="table-container">
+      <table id="searchResultsTable">
+        <tbody>
+        </tbody>
+      </table>
+    </div>
   </div>
 
-  
-        <input type="button" value="Add Rows" id = "addButton" onclick="addRow('data', 3)">
+<footer>
+  <div class="footer-container">
+    <div class="logo-container">
+      <img src="appOrSoftLogo.png" alt="AppOrSoft Logo" class="logo">
+    </div>
+    <div class="privacy-container">
+      <p>&copy; 2023 AppOrSoft. All Rights Reserved.</p>
+      <p><a href="privacy.html">Privacy Policy</a></p>
+    </div>
+  </div>
+</footer>
 
-
-    <form>
-
-
-  
-
-  <h2>Enter Search Data </h2>
-      <input type="button" value="Search" onclick="updateSearchResults()">
-
-<table id="searchEnterTable">
-  <thead>
-    <tr>
-    </tr>
-  </thead>
-  <tbody>
-  </tbody>
-</table>
-
-      
-<h2>View Search Results</h2>
-
-<input type="button" value="Print All Data" onclick="printTable('data')" id ="printButton">
-<input type="button" value="Print Results" onclick="printTable('searchResultsTable')" id ="printButton">
-<div class="table-container">
-<table id="searchResultsTable">
-  <thead>
-    <tr>
-    </tr>
-  </thead>
-  <tbody>
-  </tbody>
-</table>
-</div>
 
 </body>
-
 </html>
+

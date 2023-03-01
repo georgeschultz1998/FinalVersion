@@ -4,18 +4,18 @@
 <head>
   <link rel="stylesheet" type="text/css" href="style.css">
   <script src="myScript.js"></script>
-  <title>Real Estate Website</title>
+  <title>Mears Avenue Apartments</title>
 </head>
 
 <body>
   <header>
-    <h1>Real Estate Company</h1>
+    <h1>Mears Avenue Apartments</h1>
   </header>
   <nav>
     <ul>
       <li><a href="home.html">Home</a></li>
       <li><a href="featured.html">Featured Properties</a></li>
-      <li><a href="about.html">About Us</a></li>
+      <li><a href="account.html">Sign Up / Sign In</a></li>
       <li><a href="contact.html">Contact</a></li>
       <li><a href="index.html">Database</a></li>
     </ul>
@@ -32,17 +32,42 @@
 
     <body>
 
-      <h2>Contact</h2>
-            <section id="contact">
-              <h3>Contact</h3>
-              <p>Phone: 555-555-5555</p>
-              <p>Email: info@realestate.com</p>
-            </section>
+
+      <section id="contact">
+  <div class="container">
+    <h2>Contact Us</h2>
+    <form id="contact-form" method="post" action="https://formspree.io/f/mzbkggop">
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" placeholder="Your Name" required>
+
+      <label for="email">Email</label>
+      <input type="email" id="email" name="_replyto" placeholder="Your Email" required>
+
+      <label for="message">Message</label>
+      <textarea id="message" name="message" placeholder="Your message here" required></textarea>
+
+      <input type="submit" value="Send">
+    </form>
+  </div>
+</section>
+
+
+
+
 
   </main>
-  <footer>
-    <p>Copyright 2021 Real Estate Company</p>
-  </footer>
+<footer>
+  <div class="footer-container">
+    <div class="logo-container">
+      <img src="appOrSoftLogo.png" alt="AppOrSoft Logo" class="logo">
+    </div>
+    <div class="privacy-container">
+      <p>&copy; 2023 AppOrSoft. All Rights Reserved.</p>
+      <p><a href="privacy.html">Privacy Policy</a></p>
+    </div>
+  </div>
+</footer>
+
 
 </body>
 
