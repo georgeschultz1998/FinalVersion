@@ -237,26 +237,3 @@ function populateTable(data) {
 function zoomIn(image) {
 	image.classList.toggle("zoom");
 }
-
-// Function to handle Google sign-in
-function onSignIn(googleUser) {
-  // Get the Google ID token
-  const idToken = googleUser.getAuthResponse().id_token;
-
-  // Send a request to the server to sign in with the Google ID token
-  fetch('/googleSignIn', {
-    method: 'POST',
-    body: JSON.stringify({ idToken }),
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  }).then((response) => response.json()).then((response) => {
-    if (response.success) {
-      // If the login was successful, redirect the user to the dashboard
-      window.location.href = '/dashboard';
-    } else {
-      // If there was an error logging in, display the error message
-      displayError(response.error);
-    }
-  });
-}
