@@ -126,90 +126,137 @@ function displayUser(username) {
 }
 
 
-function registerUser() {
-  const email = document.getElementById('email').value;
-  const password = document.getElementById('password').value;
-  const confirmPassword = document.getElementById('confirm-password').value;
 
-  if (password !== confirmPassword) {
-    alert('Passwords do not match');
-    return false;
+// retrieve data from storage (if available)
+var data = JSON.parse(localStorage.getItem("tableData")) || [];
+
+function addRow() {
+  var id = document.getElementById("id").value;
+  var apt = document.getElementById("apt").value;
+  var tenant = document.getElementById("tenant").value;
+  var month = document.getElementById("month").value;
+  var year = document.getElementById("year").value;
+  var transaction = document.getElementById("transaction").value;
+  var debit = document.getElementById("debit").value;
+  var credit = document.getElementById("credit").value;
+  var date = document.getElementById("date").value;
+  var type = document.getElementById("type").value;
+  var notes = document.getElementById("notes").value;
+
+  // create row object
+  var row = {
+    id: id,
+    apt: apt,
+    tenant: tenant,
+    month: month,
+    year: year,
+    transaction: transaction,
+    debit: debit,
+    credit: credit,
+    date: date,
+    type: type,
+    notes: notes
+  };
+
+  // add row object to data array
+  data.push(row);
+
+  // save data to storage
+  localStorage.setItem("tableData", JSON.stringify(data));
+
+  // add row to table
+  var table = document.getElementById("data");
+  var newRow = table.insertRow(-1);
+  var rowValues = Object.values(row);
+  for (var i = 0; i < rowValues.length; i++) {
+    var cell = newRow.insertCell(i);
+    cell.innerHTML = rowValues[i];
+    // add event listener to cell for editing
+    cell.addEventListener("click", function() {
+      var currentCell = this;
+      var originalValue = currentCell.innerHTML;
+      currentCell.innerHTML = "<input type='text' value='" + originalValue + "'>";
+      var input = currentCell.firstChild;
+      input.focus();
+      input.addEventListener("blur", function() {
+        currentCell.innerHTML = input.value;
+        updateData();
+      });
+    });
   }
 
-  const attributeList = [
-    new AmazonCognitoIdentity.CognitoUserAttribute({
-      Name: 'email',
-      Value: email,
-    }),
-  ];
+  // clear input fields
+  document.getElementById("id").value = "";
+  document.getElementById("apt").value = "";
+  document.getElementById("tenant").value = "";
+  document.getElementById("month").value = "";
+  document.getElementById("year").value = "";
+  document.getElementById("transaction").value = "";
+  document.getElementById("debit").value = "";
+  document.getElementById("credit").value = "";
+  document.getElementById("date").value = "";
+  document.getElementById("type").value = "";
+  document.getElementById("notes").value = "";
+}
 
-  const userPool = new AmazonCognitoIdentity.CognitoUserPool({
-    UserPoolId: 'us-west-2_cwx6X3fBu',
-    ClientId: '2560pmrpa95k7h0opsijakkia1',
-  });
+function populateTable(data) {
+  var table = document.getElementById("myTable");
 
-  userPool.signUp(email, password, attributeList, null, function (err, result) {
-    if (err) {
-      alert(err.message || JSON.stringify(err));
-      return false;
+  // Loop through the data and create a new row for each object
+  for (var i = 0; i < data.length; i++) {
+    var row = table.insertRow(-1);
+
+    // Add a cell for each data element
+    var idCell = row.insertCell(0);
+    var aptCell = row.insertCell(1);
+    var tenantCell = row.insertCell(2);
+    var monthCell = row.insertCell(3);
+    var yearCell = row.insertCell(4);
+    var transCell = row.insertCell(5);
+    var debitCell = row.insertCell(6);
+    var creditCell = row.insertCell(7);
+    var dateCell = row.insertCell(8);
+    var typeCell = row.insertCell(9);
+    var notesCell = row.insertCell(10);
+
+    // Populate the cells with the data
+    idCell.innerHTML = data[i].ID;
+    aptCell.innerHTML = data[i].Apt;
+    tenantCell.innerHTML = data[i].Tenant;
+    monthCell.innerHTML = data[i].Month;
+    yearCell.innerHTML = data[i].Year;
+    transCell.innerHTML = data[i].Transaction;
+    debitCell.innerHTML = data[i].Debit;
+    creditCell.innerHTML = data[i].Credit;
+    dateCell.innerHTML = data[i].Date;
+    typeCell.innerHTML = data[i].Type;
+    notesCell.innerHTML = data[i].Notes;
+  }
+}
+
+function zoomIn(image) {
+	image.classList.toggle("zoom");
+}
+
+// Function to handle Google sign-in
+function onSignIn(googleUser) {
+  // Get the Google ID token
+  const idToken = googleUser.getAuthResponse().id_token;
+
+  // Send a request to the server to sign in with the Google ID token
+  fetch('/googleSignIn', {
+    method: 'POST',
+    body: JSON.stringify({ idToken }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }).then((response) => response.json()).then((response) => {
+    if (response.success) {
+      // If the login was successful, redirect the user to the dashboard
+      window.location.href = '/dashboard';
     } else {
-      const cognitoUser = result.user;
-      const authenticationData = {
-        Username: email,
-        Password: password,
-      };
-      const authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails(
-        authenticationData
-      );
-      cognitoUser.authenticateUser(authenticationDetails, {
-        onSuccess: function (result) {
-          const accessToken = result.getAccessToken().getJwtToken();
-          const idToken = result.getIdToken().getJwtToken();
-          // Here, you can redirect the user to a new page or update the UI to show the user has signed in
-          alert('User successfully registered and signed in');
-          return true;
-        },
-        onFailure: function (err) {
-          alert(err.message || JSON.stringify(err));
-          return false;
-        },
-      });
+      // If there was an error logging in, display the error message
+      displayError(response.error);
     }
   });
-
-  return false;
 }
-
-function signIn(email, password) {
-  const authenticationData = {
-    Username: email,
-    Password: password,
-  };
-  const authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails(
-    authenticationData
-  );
-  const userData = {
-    Username: email,
-    Pool: userPool,
-  };
-  const userPool = new AmazonCognitoIdentity.CognitoUserPool({
-    UserPoolId: 'us-west-2_cwx6X3fBu',
-    ClientId: '2560pmrpa95k7h0opsijakkia1',
-  });
-  const cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
-
-  cognitoUser.authenticateUser(authenticationDetails, {
-    onSuccess: function (result) {
-      console.log('Access token:', result.getAccessToken().getJwtToken());
-      console.log('ID token:', result.getIdToken().getJwtToken());
-      console.log('Refresh token:', result.getRefreshToken().getToken());
-    },
-    onFailure: function (err) {
-      console.error('Authentication error:', err);
-    },
-  });
-}
-
-
-
-

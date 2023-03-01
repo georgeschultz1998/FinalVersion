@@ -1,55 +1,57 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <link rel="stylesheet" type="text/css" href="style.css">
   <meta name="google-signin-client_id" content="711260327111-ah5bkfdknfp72veb7g5m90id1nanhqno.apps.googleusercontent.com">
   <script src="https://apis.google.com/js/platform.js" async defer></script>
-  <script src="https://sdk.amazonaws.com/js/aws-sdk-2.7.16.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/amazon-cognito-identity-js"></script>
   <script src="myScript.js"></script>
   <title>Mears Avenue Apartments</title>
 </head>
+
 <body>
-  <header>
-    <h1>Mears Avenue Apartments</h1>
-  </header>
-  <nav>
-    <ul>
-      <li><a href="home.html">Home</a></li>
-      <li><a href="featured.html">Featured Properties</a></li>
-      <li><a href="account.html">Sign Up / Sign In</a></li>
-      <li><a href="contact.html">Contact</a></li>
-      <li><a href="index.html">Database</a></li>
-    </ul>
-  </nav>
-  <main>
-    <div id="signup">
-      <h2>Sign Up</h2>
-      <form onsubmit="return registerUser()">
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
-        <label for="confirm-password">Confirm Password:</label>
-        <input type="password" id="confirm-password" name="confirm-password" required>
-        <input type="submit" value="Sign Up">
-      </form>
-    </div>
-    <div id="signin">
-      <h2>Sign In</h2>
-      <form onsubmit="return loginUser()">
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
-        <input type="submit" value="Sign In">
-      </form>
-    </div>
-  </main>
-  <footer>
-    <img src="appOrSoftLogo.png" alt="AppOrSoft Logo" class="logo">
-    <p>&copy; 2023 AppOrSoft. All Rights Reserved.</p>
-    <p><a href="privacy.html">Privacy Policy</a> | <a href="tos.html">Terms of Service</a></p>
-  </footer>
-</body>
+    <header>
+      <h1>Sign Up / Sign In</h1>
+    </header>
+    <main>
+      <div id="signup">
+        <h2>Sign Up</h2>
+        <form>
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" required>
+          <label for="password">Password:</label>
+          <input type="password" id="password" name="password" required>
+          <label for="confirm-password">Confirm Password:</label>
+          <input type="password" id="confirm-password" name="confirm-password" required>
+          <input type="submit" value="Sign Up">
+        </form>
+        <div id="signup-with">
+          <h3>Sign Up With:</h3>
+          <button id="signup-google">Google</button>
+          <button id="signup-facebook">Facebook</button>
+          <button id="signup-microsoft">Microsoft</button>
+        </div>
+      </div>
+      <div id="signin">
+        <h2>Sign In</h2>
+        <form>
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" required>
+          <label for="password">Password:</label>
+          <input type="password" id="password" name="password" required>
+          <input type="submit" value="Sign In">
+        </form>
+        <div id="signin-with">
+          <h3>Sign In With:</h3>
+          <button id="signin-google">Google</button>
+          <button id="signin-facebook">Facebook</button>
+          <button id="signin-microsoft">Microsoft</button>
+        </div>
+      </div>
+    </main>
+    <footer>
+      <p>&copy; 2023 Mears Avenue Apartments</p>
+    </footer>
+  </body>
+
 </html>
