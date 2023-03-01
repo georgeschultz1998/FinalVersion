@@ -644,6 +644,4 @@ var loadSearchResultsTable = function() {
   });
 }
 
-function zoomIn(image) {
-	image.classList.toggle("zoom");
-}
+
