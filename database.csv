@@ -9,4 +9,7 @@ ID,Apt,Tenant,Month,Year,Transaction,Debit,Credit,Date,Type,Notes
 8,102,Jane Smith,April,2022,Rent,950,,4/1/2022,Check,
 9,103,Ja,An,2022,Rent,800,,5/1/2022,Check,
 10,101,John Doe,May,2022,Rent,1000,,5/1/2022,Check,
-11,102,103,July,2023,Rent,1000,,,,
+11,102,103,July,2023,Rent,100,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
