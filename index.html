@@ -9,6 +9,76 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/smoothness/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+	
+  <script>
+function saveCSV() {
+  const table = document.getElementById("data");
+  const rows = Array.from(table.rows);
+
+  // Update the HTML table with any changes that may have been made
+  rows.forEach(row => {
+    Array.from(row.cells).forEach((cell, index) => {
+      const inputEl = cell.querySelector('input');
+      if (inputEl) {
+        row.cells[index].textContent = inputEl.value;
+      }
+    });
+  });
+
+  // Convert the table rows to a 2D array
+  const data = rows.map(row => Array.from(row.cells).map(cell => cell.textContent.trim()));
+
+  // Convert the 2D array to a CSV string
+  const csv = Papa.unparse(data);
+
+  // Send a POST request to the server to save the CSV file
+  fetch("/save-csv", {
+    method: "POST",
+    body: csv
+  })
+    .then(response => {
+      if (response.ok) {
+        //alert("CSV file saved successfully!");
+      } else {
+        
+      }
+    })
+    .catch(error => {
+      console.error(error);
+
+    });
+}
+
+
+    function saveHistory() {
+      const table = document.getElementById("data");
+      const rows = Array.from(table.rows);
+
+      // Convert the table rows to a 2D array
+      const data = rows.map(row => Array.from(row.cells).map(cell => cell.textContent.trim()));
+
+      // Convert the 2D array to a CSV string
+      const csv = Papa.unparse(data);
+
+      // Send a POST request to the server to save the CSV file
+      fetch("/save-csv", {
+        method: "POST",
+        body: csv
+      })
+        .then(response => {
+          if (response.ok) {
+            //alert("CSV file saved successfully!");
+          } else {
+            
+          }
+        })
+        .catch(error => {
+          console.error(error);
+
+        });
+    }
+    
+  </script>
 </head>
 
   
@@ -178,72 +248,3 @@
 
 </html>
 
-  <script>
-function saveCSV() {
-  const table = document.getElementById("data");
-  const rows = Array.from(table.rows);
-
-  // Update the HTML table with any changes that may have been made
-  rows.forEach(row => {
-    Array.from(row.cells).forEach((cell, index) => {
-      const inputEl = cell.querySelector('input');
-      if (inputEl) {
-        row.cells[index].textContent = inputEl.value;
-      }
-    });
-  });
-
-  // Convert the table rows to a 2D array
-  const data = rows.map(row => Array.from(row.cells).map(cell => cell.textContent.trim()));
-
-  // Convert the 2D array to a CSV string
-  const csv = Papa.unparse(data);
-
-  // Send a POST request to the server to save the CSV file
-  fetch("/save-csv", {
-    method: "POST",
-    body: csv
-  })
-    .then(response => {
-      if (response.ok) {
-        //alert("CSV file saved successfully!");
-      } else {
-        
-      }
-    })
-    .catch(error => {
-      console.error(error);
-
-    });
-}
-
-
-    function saveHistory() {
-      const table = document.getElementById("data");
-      const rows = Array.from(table.rows);
-
-      // Convert the table rows to a 2D array
-      const data = rows.map(row => Array.from(row.cells).map(cell => cell.textContent.trim()));
-
-      // Convert the 2D array to a CSV string
-      const csv = Papa.unparse(data);
-
-      // Send a POST request to the server to save the CSV file
-      fetch("/save-csv", {
-        method: "POST",
-        body: csv
-      })
-        .then(response => {
-          if (response.ok) {
-            //alert("CSV file saved successfully!");
-          } else {
-            
-          }
-        })
-        .catch(error => {
-          console.error(error);
-
-        });
-    }
-    
-  </script>
