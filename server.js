@@ -1,11 +1,60 @@
-const http = require('http');
+const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const qs = require('querystring');
 const csv = require('csv-parser');
 const Papa = require('papaparse');
+const bodyParser = require('body-parser');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+
+const app = express();
+
+// Set up body parser middleware
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+// Initialize passport
+app.use(passport.initialize());
+
+// Set up passport session middleware
+app.use(passport.session());
+
+// Define the local authentication strategy
+passport.use(new LocalStrategy(
+  {
+    usernameField: 'email',
+    passwordField: 'password'
+  },
+  (email, password, done) => {
+    // Here, you can authenticate the user by checking if the email and password are valid
+    // If the user is authenticated, call done(null, user)
+    // If the user is not authenticated, call done(null, false)
+  }
+));
+
+// Define serialization and deserialization functions for passport
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+
+passport.deserializeUser((id, done) => {
+  // Here, you can fetch the user object from the database using the id
+  // Once you have the user object, call done(null, user)
+});
+
+// Handle requests for the sign up route
+app.post('/signup', (req, res) => {
+  // Here, you can create a new user account using the information in req.body
+  // If the user account is created successfully, redirect the user to the sign in page
+  // If there was an error, send an error response to the client
+});
+
+// Handle requests for the sign in route
+app.post('/signin', passport.authenticate('local'), (req, res) => {
+  // If the user is authenticated, you can proceed with the request handling logic here
+  // For example, you can redirect the user to a dashboard page or return a JSON response containing a JWT token
+});
 
 const filePath1 = 'database.csv';
 const filePath2 = 'history.csv';
@@ -116,89 +165,12 @@ passport.use(new LocalStrategy(
   }
 ));
 
-const server = http.createServer((req, res) => {
-  // Check if the request requires authentication
-  const requiresAuth = req.url === '/admin';
-
-  if (requiresAuth) {
-    // Authenticate the request using passport
-    passport.authenticate('local', (err, user, info) => {
-      if (err) {
-        return res.status(500).send(err);
-      }
-      if (!user) {
-        return res.status(401).send(info.message);
-      }
-      // If the user is authenticated, you can proceed with the request handling logic here
-      handleRequest(req, res);
-    })(req, res);
-  } else {
-    // If the request doesn't require authentication, proceed with the request handling logic directly
-    handleRequest(req, res);
-  }
-});
-
-function handleRequest(req, res) {
-  res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
-  const extname = path.extname(req.url);
-  let contentType = 'text/html';
-
-  switch (extname) {
-    case '.css':
-      contentType = 'text/css';
-      break;
-    case '.js':
-      contentType = 'text/javascript';
-      break;
-  }
-
-  if (req.method === 'POST') {
-    let body = '';
-    req.on('data', chunk => {
-      body += chunk.toString();
-    });
-    req.on('end', () => {
-      if (req.url === '/history') {
-        updateHistory(body + "\n");
-        updateDatabase(body);
-      } else {
-        updateHistory(body + "\n");
-        updateDatabase(body);
-      }
-      res.writeHead(200, { 'Content-Type': 'text/plain' });
-      res.write('Database updated successfully\n');
-      res.end();
-    });
-
-  } else {
-    loadData(() => {
-      loadHistoryData((historyArray) => {
-        // read the HTML file
-        const filePath = req.url === '/' ? './index.html' : '.' + req.url;
-        fs.readFile(filePath, (err, content) => {
-          if (err) {
-            res.writeHead(404, { 'Content-Type': 'text/plain' });
-            res.write('404 Not Found\n');
-            res.end();
-          } else {
-            res.writeHead(200, { 'Content-Type': contentType });
-            if (req.url === '/history') {
-              res.write(JSON.stringify(historyArray));
-            } else {
-              res.write(content);
-            }
-            res.end();
-          }
-        });
-      });
-    });
-  }
-}
-
 const port = process.env.PORT || 3000;
-server.listen(port, () => {
+app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
+
+
 
 
 module.exports = {
